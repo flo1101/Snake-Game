@@ -8,8 +8,36 @@
 body {
     width: 100vw;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #343556;
+    color: white;
+}
+
+.score {
 }
 
 .board {
+    margin-top: 10px;
+    width: 80vw;
+    height: 80vw;
+    max-width: 800px;
+    max-height: 800px;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-gap: 2px;
+}
 
+.cell {
+    background-color: #222338;
+    border-radius: 3px;
+}
+
+.snake {
+    background-color: #e5e5e5;
+}
+
+.food {
+    background-color: #f44278;
 }
