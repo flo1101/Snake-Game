@@ -1,4 +1,3 @@
-
 class Node {
     constructor(value) {
         this.next = null;
@@ -27,6 +26,7 @@ class Snake {
             }
         })
     }
+
     grow(snakeCells) {
         const newTail = new Node([this.tail.x, this.tail.y]);
         const prev = this.tail.prev;

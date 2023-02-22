@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from "react";
 import Snake from "../snake";
 
-export default function Board() {
+export default function Board({score, setScore}) {
 
     const BOARD_SIZE = 15;
+    const board = createBoard();
 
-    const [score, setScore] = useState(0);
-    const [board, setBoard] = useState(createBoard());
-    const [snake, setSnake] = useState(new Snake([[3,7],[2,7],[1,7]]));
-    const [snakeCells, setSnakeCells] = useState([[3,7],[2,7],[1,7]]);
-    const [foodCell, setFoodCell] = useState([10,7]);
+    const [snake, setSnake] = useState(new Snake([[3, 7], [2, 7], [1, 7]]));
+    const [snakeCells, setSnakeCells] = useState([[3, 7], [2, 7], [1, 7]]);
+    const [foodCell, setFoodCell] = useState([10, 7]);
     const [direction, setDirection] = useState("r");
 
     useEffect(() => {
@@ -38,13 +37,18 @@ export default function Board() {
             newState.add(snake.head.getValue())
             return newState
         })
+        checkValidField();
         checkFood();
+    }
+
+    function checkValidField() {
+
     }
 
     function checkFood() {
         if (!compareCells(snake.head.getValue(), foodCell)) return;
         setFoodCell(getFreeCell);
-        setScore(prevScore => prevScore + 1);
+        setScore(prev => prev + 1);
         growSnake();
     }
 
@@ -60,9 +64,9 @@ export default function Board() {
     function getFreeCell() {
         const x = randomNumber(BOARD_SIZE);
         const y = randomNumber(BOARD_SIZE);
-        const newCell = [x,y];
+        const newCell = [x, y];
         snakeCells.forEach(value => {
-            if (compareCells(newCell,value)) return getFreeCell();
+            if (compareCells(newCell, value)) return getFreeCell();
         })
         return newCell;
     }
@@ -88,12 +92,14 @@ export default function Board() {
 
     function compareWithSnakeCells(cellValue) {
         for (const snakeCellValue of snakeCells) {
-            if (compareCells(cellValue, snakeCellValue)) { return true }
+            if (compareCells(cellValue, snakeCellValue)) {
+                return true
+            }
         }
         return false;
     }
 
-    function compareCells(a,b) {
+    function compareCells(a, b) {
         return a[0] === b[0] && a[1] === b[1];
     }
 
@@ -111,7 +117,6 @@ export default function Board() {
 
     return (
         <div>
-            <h2 className="score">Score: {score}</h2>
             <button onClick={moveSnake}>move</button>
             <div className="board">
                 {board.map((row) => (
