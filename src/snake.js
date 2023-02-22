@@ -27,10 +27,30 @@ class Snake {
             }
         })
     }
-
-    grow() {
+    grow(snakeCells) {
         const newTail = new Node([this.tail.x, this.tail.y]);
-        // if ()
+        const prev = this.tail.prev;
+        if (this.tail.x === prev.x) {
+            if (this.tail.y < prev.y) {
+                newTail.y -= 1;
+            } else {
+                newTail.y += 1;
+            }
+        } else {
+            if (this.tail.x < prev.x) {
+                newTail.x -= 1;
+            } else {
+                newTail.x += 1;
+            }
+        }
+        if (newTail.x < 0 || newTail.x > 14 || newTail.y < 0 || newTail.y > 14) return false;
+        for (const cell in snakeCells) {
+            if (newTail.x === cell[0] && newTail.y === cell[1]) return false;
+        }
+        newTail.prev = this.tail;
+        this.tail.next = newTail;
+        this.tail = newTail;
+        return true;
     }
 
     move(direction) {

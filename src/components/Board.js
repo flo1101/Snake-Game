@@ -8,7 +8,7 @@ export default function Board() {
     const [score, setScore] = useState(0);
     const [board, setBoard] = useState(createBoard());
     const [snake, setSnake] = useState(new Snake([[3,7],[2,7],[1,7]]));
-    const [snakeCellValues, setSnakeCellValues] = useState([[3,7],[2,7],[1,7]]);
+    const [snakeCells, setSnakeCells] = useState([[3,7],[2,7],[1,7]]);
     const [foodCell, setFoodCell] = useState([10,7]);
     const [direction, setDirection] = useState("r");
 
@@ -28,7 +28,7 @@ export default function Board() {
     function moveSnake() {
         const tail = snake.tail;
         snake.move(direction);
-        setSnakeCellValues(prevState => {
+        setSnakeCells(prevState => {
             const newState = new Set(prevState);
             newState.forEach(value => {
                 if (compareCells(tail.getValue(), value)) {
@@ -49,8 +49,8 @@ export default function Board() {
     }
 
     function growSnake() {
-        snake.grow()
-        setSnakeCellValues(prevState => {
+        if (!snake.grow(snakeCells)) return;
+        setSnakeCells(prevState => {
             const newState = new Set(prevState);
             newState.add(snake.tail.getValue());
             return newState;
@@ -61,7 +61,7 @@ export default function Board() {
         const x = randomNumber(BOARD_SIZE);
         const y = randomNumber(BOARD_SIZE);
         const newCell = [x,y];
-        snakeCellValues.forEach(value => {
+        snakeCells.forEach(value => {
             if (compareCells(newCell,value)) return getFreeCell();
         })
         return newCell;
@@ -87,7 +87,7 @@ export default function Board() {
     }
 
     function compareWithSnakeCells(cellValue) {
-        for (const snakeCellValue of snakeCellValues) {
+        for (const snakeCellValue of snakeCells) {
             if (compareCells(cellValue, snakeCellValue)) { return true }
         }
         return false;
