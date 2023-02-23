@@ -14,6 +14,7 @@ function App() {
     const [gameState, setGameState] = useState(gameStates.DEFAULT)
 
     function startGame() {
+        setScore(0)
         setGameState(gameStates.RUNNING)
     }
 
@@ -35,10 +36,12 @@ function App() {
             )
         } else if (gameState === gameStates.FINISHED) {
             return (
-                <div>
-                    <h1>Your Score: {score}</h1>
-                    <button onClick={startGame}>Play Again</button>
-                    <button onClick={returnToMenu}>Main Menu</button>
+                <div className={"finish-screen"}>
+                    <h1 className={"end-score"}>Your Score: {score}</h1>
+                    <div>
+                        <button className={"btn-play-again"} onClick={startGame}>Play Again</button>
+                        <button onClick={returnToMenu}>Main Menu</button>
+                    </div>
                 </div>
             );
         } else if (gameState === gameStates.DEFAULT) {

@@ -43,7 +43,13 @@ export default function Board({setScore, endGame}) {
     }
 
     function checkValidField() {
-
+        const head = snake.head.getValue()
+        const x = head[0];
+        const y = head[1];
+        if (x < 0 || x > 14 || y < 0 || y > 14) endGame();
+        snakeCells.forEach(cell => {
+            if (compareCells(head, cell)) endGame();
+        })
     }
 
     function checkFood() {
@@ -129,7 +135,6 @@ export default function Board({setScore, endGame}) {
 
     return (
         <div>
-            <button onClick={moveSnake}>Move</button>
             <div className="board">
                 {board.map((row) => (
                     row.map((cellValue, cellID) => (
