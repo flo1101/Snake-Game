@@ -11,28 +11,42 @@ function App() {
     }
 
     const [score, setScore] = useState(0);
-    const [gameState, setGameState] = useState(gameStates.RUNNING)
+    const [gameState, setGameState] = useState(gameStates.DEFAULT)
+
+    function startGame() {
+        setGameState(gameStates.RUNNING)
+    }
+
+    function endGame() {
+        setGameState(gameStates.FINISHED)
+    }
+
+    function returnToMenu() {
+        setGameState(gameStates.DEFAULT)
+    }
 
     function getPageContent() {
         if (gameState === gameStates.RUNNING) {
             return (
                 <>
                     <h2 className="score">Score: {score}</h2>
-                    <Board score={score} setScore={setScore}/>
+                    <Board setScore={setScore} endGame={endGame}/>
                 </>
             )
         } else if (gameState === gameStates.FINISHED) {
             return (
                 <div>
                     <h1>Your Score: {score}</h1>
-                    <button>play again</button>
-                    <button>Main Menu</button>
+                    <button onClick={startGame}>Play Again</button>
+                    <button onClick={returnToMenu}>Main Menu</button>
                 </div>
             );
-        } else {
+        } else if (gameState === gameStates.DEFAULT) {
             return (
                 <div className={"menu"}>
-
+                    <h1>Snake Game</h1>
+                    <p className={"intro-text"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem et magni modi molestias temporibus voluptatibus! Asperiores consequatur dolorem quas?</p>
+                    <button className={"btn-menu-play"} onClick={startGame}>Start Game</button>
                 </div>
             )
         }

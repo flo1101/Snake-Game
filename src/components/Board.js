@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Snake from "../snake";
+import useInterval from "../lib/utils"
 
-export default function Board({score, setScore}) {
+export default function Board({setScore, endGame}) {
 
     const BOARD_SIZE = 15;
     const board = createBoard();
@@ -12,10 +13,6 @@ export default function Board({score, setScore}) {
     const [direction, setDirection] = useState("r");
 
     useEffect(() => {
-        // window.setInterval(() => {
-        //     moveSnake();
-        // }, 1000)
-
         window.addEventListener("keydown", e => {
             const newDirection = getDirectionFromKey(e.key);
             if (newDirection !== "") {
@@ -23,6 +20,10 @@ export default function Board({score, setScore}) {
             }
         })
     }, [])
+
+    useInterval(() => {
+        moveSnake()
+    }, 200);
 
     function moveSnake() {
         const tail = snake.tail;
@@ -47,7 +48,7 @@ export default function Board({score, setScore}) {
 
     function checkFood() {
         if (!compareCells(snake.head.getValue(), foodCell)) return;
-        setFoodCell(getFreeCell);
+        setFoodCell(getNewFoodCell());
         setScore(prev => prev + 1);
         growSnake();
     }
@@ -61,14 +62,25 @@ export default function Board({score, setScore}) {
         })
     }
 
-    function getFreeCell() {
+    function getNewFoodCell() {
+        let newCell;
+        let isSnakeCell = true;
+        while (isSnakeCell) {
+            newCell = getRandomCell();
+            isSnakeCell = false;
+            snakeCells.forEach(snakeCell => {
+                if (compareCells(newCell, snakeCell)) {
+                    isSnakeCell = true;
+                }
+            })
+        }
+        return newCell;
+    }
+
+    function getRandomCell() {
         const x = randomNumber(BOARD_SIZE);
         const y = randomNumber(BOARD_SIZE);
-        const newCell = [x, y];
-        snakeCells.forEach(value => {
-            if (compareCells(newCell, value)) return getFreeCell();
-        })
-        return newCell;
+        return [x, y];
     }
 
     function randomNumber(max) {
@@ -117,7 +129,7 @@ export default function Board({score, setScore}) {
 
     return (
         <div>
-            <button onClick={moveSnake}>move</button>
+            <button onClick={moveSnake}>Move</button>
             <div className="board">
                 {board.map((row) => (
                     row.map((cellValue, cellID) => (
