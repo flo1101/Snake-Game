@@ -17,12 +17,13 @@ body {
 
 h1 {
     font-size: 3rem;
+    text-align: center;
 }
 
 .board {
     margin-top: 10px;
-    width: 80vw;
-    height: 80vw;
+    width: 90vw;
+    height: 90vw;
     max-width: 800px;
     max-height: 800px;
     display: grid;
@@ -77,6 +78,7 @@ button:hover {
     line-height: 25px;
     margin-bottom: 40px;
     margin-top: 5px;
+    padding: 0 10px;
 }
 
 .btn-play-again {
@@ -101,17 +103,16 @@ button:hover {
 
 .btn-restart {
     height: 25px;
-    width: 25px;
+    width: 150px;
     border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     cursor: pointer;
 }
 
 .btn-restart img {
     height: 100%;
-    width: 100%;
 }
 
 .speed-options {
@@ -148,3 +149,22 @@ button:hover {
 .active:hover {
     color: white;
 }
+
+.score {
+    width: 150px;
+}
+
+@media(max-width: 600px) {
+    .speed {
+        display: none;
+    }
+
+    .score {
+        width: initial;
+    }
+
+    .btn-restart {
+        width: initial;
+    }
+}
+

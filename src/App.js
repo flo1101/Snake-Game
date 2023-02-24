@@ -35,7 +35,16 @@ function App() {
     }
 
     function getSpeed(speed) {
-        return speed
+        switch (speed) {
+            case speedOptions.SLOW:
+                return "Slow";
+            case speedOptions.MEDIUM:
+                return "Medium";
+            case speedOptions.FAST:
+                return "Fast";
+            default:
+                return "";
+        }
     }
 
     function getPageContent() {
@@ -44,7 +53,7 @@ function App() {
                 <>
                     <div className={"game-controls"}>
                         <h2 className="score">Score: {score}</h2>
-                        <h3>Speed: {getSpeed(speed)}</h3>
+                        <h3 className={"speed"}>Speed: {getSpeed(speed)}</h3>
                         <div className={"btn-restart"} onClick={returnToMenu}>
                             <img src={arrowRestart} alt=""/>
                         </div>

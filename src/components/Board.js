@@ -5,12 +5,13 @@ import useInterval from "../lib/utils"
 export default function Board({setScore, endGame, speed}) {
 
     const BOARD_SIZE = 15;
-    const board = createBoard();
 
     const [snake, setSnake] = useState(new Snake([[3, 7], [2, 7], [1, 7]]));
     const [snakeCells, setSnakeCells] = useState([[3, 7], [2, 7], [1, 7]]);
     const [foodCell, setFoodCell] = useState([10, 7]);
     const [direction, setDirection] = useState("r");
+
+    const board = createBoard();
 
     useEffect(() => {
         window.addEventListener("keydown", e => {
