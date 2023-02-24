@@ -1,6 +1,7 @@
 import './App.css';
 import Board from "./components/Board";
 import React, {useState} from "react";
+import arrowRestart from "./res/arrow-rotate.svg"
 
 function App() {
 
@@ -10,7 +11,14 @@ function App() {
         DEFAULT: "DEFAULT"
     }
 
+    const speedOptions = {
+        SLOW: 270,
+        MEDIUM: 200,
+        FAST: 130
+    }
+
     const [score, setScore] = useState(0);
+    const [speed, setSpeed] = useState(speedOptions.MEDIUM)
     const [gameState, setGameState] = useState(gameStates.DEFAULT)
 
     function startGame() {
@@ -26,12 +34,22 @@ function App() {
         setGameState(gameStates.DEFAULT)
     }
 
+    function getSpeed(speed) {
+        return speed
+    }
+
     function getPageContent() {
         if (gameState === gameStates.RUNNING) {
             return (
                 <>
-                    <h2 className="score">Score: {score}</h2>
-                    <Board setScore={setScore} endGame={endGame}/>
+                    <div className={"game-controls"}>
+                        <h2 className="score">Score: {score}</h2>
+                        <h3>Speed: {getSpeed(speed)}</h3>
+                        <div className={"btn-restart"} onClick={returnToMenu}>
+                            <img src={arrowRestart} alt=""/>
+                        </div>
+                    </div>
+                    <Board setScore={setScore} endGame={endGame} speed={speed}/>
                 </>
             )
         } else if (gameState === gameStates.FINISHED) {
@@ -48,7 +66,29 @@ function App() {
             return (
                 <div className={"menu"}>
                     <h1>Snake Game</h1>
-                    <p className={"intro-text"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem et magni modi molestias temporibus voluptatibus! Asperiores consequatur dolorem quas?</p>
+                    <h3>How to play:</h3>
+                    <p className={"intro-text"}>To control the snake use the arrow keys on your keyboard or the direction buttons on your touch screen for mobile.</p>
+                    <h3>Pick your speed:</h3>
+                    <div className="speed-options">
+                        <div className={`speed-option 
+                                ${speed === speedOptions.SLOW ? "active" : ""}`}
+                             onClick={() => setSpeed(speedOptions.SLOW)}
+                        >
+                            <h3>Slow</h3>
+                        </div>
+                        <div className={`speed-option 
+                                ${speed === speedOptions.MEDIUM ? "active" : ""}`}
+                             onClick={() => setSpeed(speedOptions.MEDIUM)}
+                        >
+                            <h3>Medium</h3>
+                        </div>
+                        <div className={`speed-option 
+                                ${speed === speedOptions.FAST ? "active" : ""}`}
+                             onClick={() => setSpeed(speedOptions.FAST)}
+                        >
+                            <h3>Fast</h3>
+                        </div>
+                    </div>
                     <button className={"btn-menu-play"} onClick={startGame}>Start Game</button>
                 </div>
             )

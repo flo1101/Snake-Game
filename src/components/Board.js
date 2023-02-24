@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Snake from "../snake";
 import useInterval from "../lib/utils"
 
-export default function Board({setScore, endGame}) {
+export default function Board({setScore, endGame, speed}) {
 
     const BOARD_SIZE = 15;
     const board = createBoard();
@@ -23,7 +23,7 @@ export default function Board({setScore, endGame}) {
 
     useInterval(() => {
         moveSnake()
-    }, 200);
+    }, speed);
 
     function moveSnake() {
         const tail = snake.tail;
@@ -46,7 +46,7 @@ export default function Board({setScore, endGame}) {
         const head = snake.head.getValue()
         const x = head[0];
         const y = head[1];
-        if (x < 0 || x > 14 || y < 0 || y > 14) endGame();
+        if (x < 0 || x > BOARD_SIZE-1 || y < 0 || y > BOARD_SIZE-1) endGame();
         snakeCells.forEach(cell => {
             if (compareCells(head, cell)) endGame();
         })
