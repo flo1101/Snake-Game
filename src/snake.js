@@ -61,16 +61,16 @@ class Snake {
     moveHead(direction) {
         const newHead = new Node([this.head.x, this.head.y]);
         switch (direction) {
-            case "u":
+            case "UP":
                 newHead.y -= 1;
                 break;
-            case "d":
+            case "DOWN":
                 newHead.y += 1;
                 break;
-            case "r":
+            case "RIGHT":
                 newHead.x += 1;
                 break;
-            case "l":
+            case "LEFT":
                 newHead.x -= 1;
                 break;
         }

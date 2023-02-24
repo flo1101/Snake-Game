@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import Snake from "../snake";
 import useInterval from "../lib/utils"
 
-export default function Board({setScore, endGame, speed}) {
+export default function Board({setScore, endGame, speed, direction, setDirection}) {
 
     const BOARD_SIZE = 15;
 
     const [snake, setSnake] = useState(new Snake([[3, 7], [2, 7], [1, 7]]));
     const [snakeCells, setSnakeCells] = useState([[3, 7], [2, 7], [1, 7]]);
     const [foodCell, setFoodCell] = useState([10, 7]);
-    const [direction, setDirection] = useState("r");
+    // const [direction, setDirection] = useState("r");
 
     const board = createBoard();
 
@@ -17,13 +17,29 @@ export default function Board({setScore, endGame, speed}) {
         window.addEventListener("keydown", e => {
             const newDirection = getDirectionFromKey(e.key);
             if (newDirection !== "") {
+                console.log(newDirection)
                 setDirection(newDirection);
             }
         })
     }, [])
 
+    function getDirectionFromKey(key) {
+        switch (key) {
+            case "ArrowUp":
+                return "UP";
+            case "ArrowDown":
+                return "DOWN";
+            case "ArrowRight":
+                return "RIGHT";
+            case "ArrowLeft":
+                return "LEFT";
+            default:
+                return "";
+        }
+    }
+
     useInterval(() => {
-        moveSnake()
+        moveSnake();
     }, speed);
 
     function moveSnake() {
@@ -94,20 +110,6 @@ export default function Board({setScore, endGame, speed}) {
         return Math.floor(Math.random() * max);
     }
 
-    function getDirectionFromKey(key) {
-        switch (key) {
-            case "ArrowUp":
-                return "u";
-            case "ArrowDown":
-                return "d";
-            case "ArrowRight":
-                return "r";
-            case "ArrowLeft":
-                return "l";
-            default:
-                return "";
-        }
-    }
 
     function compareWithSnakeCells(cellValue) {
         for (const snakeCellValue of snakeCells) {

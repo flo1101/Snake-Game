@@ -1,7 +1,8 @@
 import './App.css';
 import Board from "./components/Board";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import arrowRestart from "./res/arrow-rotate.svg"
+import arrowUp from "./res/arrow-up.svg"
 
 function App() {
 
@@ -17,21 +18,30 @@ function App() {
         FAST: 130
     }
 
+    const directions = {
+        RIGHT: "RIGHT",
+        LEFT: "LEFT",
+        UP: "UP",
+        DOWN: "DOWN"
+    }
+
     const [score, setScore] = useState(0);
-    const [speed, setSpeed] = useState(speedOptions.MEDIUM)
-    const [gameState, setGameState] = useState(gameStates.DEFAULT)
+    const [speed, setSpeed] = useState(speedOptions.MEDIUM);
+    const [direction, setDirection] = useState(directions.RIGHT);
+    const [gameState, setGameState] = useState(gameStates.DEFAULT);
 
     function startGame() {
-        setScore(0)
-        setGameState(gameStates.RUNNING)
+        setDirection(directions.RIGHT);
+        setScore(0);
+        setGameState(gameStates.RUNNING);
     }
 
     function endGame() {
-        setGameState(gameStates.FINISHED)
+        setGameState(gameStates.FINISHED);
     }
 
     function returnToMenu() {
-        setGameState(gameStates.DEFAULT)
+        setGameState(gameStates.DEFAULT);
     }
 
     function getSpeed(speed) {
@@ -58,7 +68,13 @@ function App() {
                             <img src={arrowRestart} alt=""/>
                         </div>
                     </div>
-                    <Board setScore={setScore} endGame={endGame} speed={speed}/>
+                    <Board setScore={setScore} endGame={endGame} speed={speed} direction={direction} setDirection={setDirection}/>
+                    <div className="direction-controls">
+                        <div className="left" onClick={() => setDirection(directions.LEFT)}><img src={arrowUp} alt=""/></div>
+                        <div className="up" onClick={() => setDirection(directions.UP)}><img src={arrowUp} alt=""/></div>
+                        <div className="right" onClick={() => setDirection(directions.RIGHT)}><img src={arrowUp} alt=""/></div>
+                        <div className="down" onClick={() => setDirection(directions.DOWN)}><img src={arrowUp} alt=""/></div>
+                    </div>
                 </>
             )
         } else if (gameState === gameStates.FINISHED) {
@@ -76,7 +92,8 @@ function App() {
                 <div className={"menu"}>
                     <h1>Snake Game</h1>
                     <h3>How to play:</h3>
-                    <p className={"intro-text"}>To control the snake use the arrow keys on your keyboard or the direction buttons on your touch screen for mobile.</p>
+                    <p className={"intro-text"}>To control the snake use the arrow keys on your keyboard or the
+                        direction buttons on your touch screen for mobile.</p>
                     <h3>Pick your speed:</h3>
                     <div className="speed-options">
                         <div className={`speed-option 

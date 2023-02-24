@@ -154,6 +154,48 @@ button:hover {
     width: 150px;
 }
 
+.direction-controls {
+    display: none;
+    width: 90vw;
+    height: 160px;
+    grid-template-columns: .8fr 1.4fr .8fr;
+    grid-gap: 5px;
+    margin-top: 20px;
+}
+
+.direction-controls div {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.direction-controls div:active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.left {
+    grid-row: 1 / span 2;
+}
+
+.right {
+    grid-row: 1 / span 2;
+    grid-column-start: 3;
+}
+
+.left img {
+    transform: rotateZ(-90deg);
+}
+
+.right img {
+    transform: rotateZ(90deg);
+}
+
+.down img {
+    transform: rotateZ(180deg);
+}
+
 @media(max-width: 600px) {
     .speed {
         display: none;
@@ -165,6 +207,10 @@ button:hover {
 
     .btn-restart {
         width: initial;
+    }
+
+    .direction-controls {
+        display: grid;
     }
 }
 
